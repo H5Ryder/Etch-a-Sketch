@@ -1,5 +1,7 @@
 //CONST VARIABLES----------------------------
 let COLORBUTTONSNUM = 5;
+let SIZEBUTTONSNUM = 5;
+
 
 
 
@@ -31,63 +33,13 @@ for (var i = 0; i < size; i++) {
 
 initialiseGrid(); //CREATES A GRID BY ITERATING THROUGH EMPTY DIV ARRAYS AND ADDING THEM TO CSS Classes
 let colorButtons = makeColorButtons(COLORBUTTONSNUM); //QUERIES 5 BUTTONS IN THE HTML FILE -> ASSIGNS THEM A RANDOM COLOR USING grc() FUNCTION
-
-
-
-
-
-for (let k = 0; k < colorButtons.length; k++) {
-
-
-    colorButtons[k].addEventListener('click', () => {
-
-        console.log("sexy");
-
-        for (let i = 0; i < size; i++) {
-            for (let j = 0; j < size; j++) {
-
-                colDivs[i][j].addEventListener('mouseenter', () => {
-                    //colDivs[i][j].classList.remove('boxH');
-                    //colDivs[i][j].classList.add('boxHBlue');
-                    capture: false
-
-                    colDivs[i][j].style.backgroundColor = colorButtons[k].style.backgroundColor;
-
-
-                });
-
-
-
-
-            }
-
-
-        }
-
-
-
-
-
-    });
-
-}
-
-
+applyNewColor(); //IF BUTTON IS CLICKED APPLIES BACKGROUND COLOR OF THAT BUTTON TO THE GRID
+let sizeButtons = makeSizeButtons(SIZEBUTTONSNUM); //QUERIES 5 BUTTONS IN THE HTML FILE -> RETURNS AN ARRAY FOR ME
+applyNewGrid();
 
 
 //Add event listener for grid buttons
-const b10 = document.querySelector('#b10');
 
-const b20 = document.querySelector('#b20');
-
-const b40 = document.querySelector('#b40');
-
-const b80 = document.querySelector('#b80');
-
-const b160 = document.querySelector('#b160');
-
-sizeButtons = [b10, b20, b40, b80, b160];
-console.log(sizeButtons);
 
 for (let k = 0; k < sizeButtons.length; k++) {
 
@@ -136,9 +88,7 @@ for (let k = 0; k < sizeButtons.length; k++) {
 
 }
 
-
-//function refresh grid
-
+//REMOVES ALL DIVS FROM THE CONTAINER DIV
 function refresh() {
 
     //remove all child divs
@@ -152,8 +102,6 @@ function refresh() {
 
 
 }
-
-
 
 //CREATES DIVS IN ROWDIVS & COLDIVS -> APPENDS THEM TO HTML -> ADDS THEM TO CLASSES
 function initialiseGrid() {
@@ -196,4 +144,60 @@ function makeColorButtons(size) {
     }
 
     return colorButtons;
+}
+//SETS UP AN EVENT LISTENER FOR EACH COLOR BUTTON -> IF CLICKED, GRID CHANGES TO COLOR OF COLOR BUTTON
+function applyNewColor(){
+    for (let k = 0; k < colorButtons.length; k++) {
+        colorButtons[k].addEventListener('click', () => {
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    colDivs[i][j].addEventListener('mouseenter', () => {
+                        capture: false
+                        colDivs[i][j].style.backgroundColor = colorButtons[k].style.backgroundColor;
+    
+                    });
+                }
+            }
+        });
+    }
+}
+//QUERIES FOR BUTTONS THAT SELECT THE SIZE OF THE GRID
+function makeSizeButtons(size) {
+
+//const b10 = document.querySelector('#b10');
+
+//const b20 = document.querySelector('#b20');
+
+//const b40 = document.querySelector('#b40');
+
+//const b80 = document.querySelector('#b80');
+
+//const b160 = document.querySelector('#b160');
+
+//return [b10, b20, b40, b80, b160];
+
+let sizeBut = new Array(size);
+let index = 10;
+
+    for (let i = 0; i < sizeBut.length; i++) {
+        
+        
+
+        if (i == 0) {
+            index = 10;
+        } else if (i > 0) {
+            index = index*2;
+        }
+
+        console.log(`#b${index}`);
+        sizeBut[i] = document.querySelector(`#b${index}`);
+        
+    }
+
+    return sizeBut;
+
+}
+
+function applyNewGrid(){
+
 }
